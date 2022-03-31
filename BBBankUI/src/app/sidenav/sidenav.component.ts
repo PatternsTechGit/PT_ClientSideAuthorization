@@ -10,9 +10,7 @@ import { AuthService } from '../services/auth.service';
 export class SidenavComponent implements OnInit {
 
   loggedInUserRole: string;
-  constructor(private authService: AuthService) {
-    
-  }
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.loggedInUserRole = JSON.parse(localStorage.getItem('loggedInUser')).roles[0];
