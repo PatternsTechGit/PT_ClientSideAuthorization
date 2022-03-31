@@ -30,3 +30,63 @@ export class AppUser {
 }
 ```
 
+### Step 2 : Create the Auth Service
+
+Create a service **AuthService** to implement the authentication flow.
+
+```
+ng generate service Auth
+```
+
+Inject the angular router in the constructor
+
+```typescript
+constructor(private router: Router) { }
+```
+
+Create the variable to store the logged in user information
+```typescript
+loggedInUser?: AppUser;
+```
+
+Create the login method which returns the AppUser observable
+
+```typescript
+login(): Observable<AppUser> {
+
+    // initializing the user information
+    this.loggedInUser = {
+      firstName: 'Waqas',
+      lastName: 'Tariq',
+      username: 'waqastariq',
+      roles: ['account-holder']
+    } as AppUser;
+
+    // saving the logged in user information in  Web Storage API (localStorage)
+    localStorage.setItem('loggedInUser', JSON.stringify(this.loggedInUser));
+
+    // returns the data i.e., user information using RxJs pipe
+    // Also using delay of one second just to simulate the API call
+    return of(this.loggedInUser).pipe(
+      delay(1000)
+    );
+  }
+```
+
+Create the logout method to remove the user information from localStorage which we will be using for checking whether the user session is valid or not.
+
+```typescript
+logout(): void {
+    // removing logged in user information from the localStorage
+    localStorage.removeItem('loggedInUser');
+    
+    // navigate to application home using router
+    this.router.navigate(['/'])
+      .then(() => {
+        window.location.reload();
+      });
+  }
+```
+
+
+
