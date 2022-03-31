@@ -32,7 +32,7 @@ export class AppUser {
 
 ### Step 2 : Create the Auth Service
 
-Create a service **AuthService** to implement the authentication flow.
+Create a service **AuthService** to implement the authentication flow in services folder.
 
 ```
 ng generate service Auth
@@ -87,6 +87,97 @@ logout(): void {
       });
   }
 ```
+### Step 3 : Create the Login Component
 
+To navigate the user for credentials information create a login component.
 
+```
+ng generate component Login
+```
+
+### Step 4 : Create the Auth Guard
+
+In order to authorize the user to access the application after login to the application. We will be using angular **Guard**. 
+
+Guards in Angular are nothing but the functionality, logic, and code which are executed before the route is loaded or the ones leaving the route. There are different type of guards.
+
+Create the gurad **AuthGuard** using the command in guards folder.
+
+```
+ng generate guard Auth
+```
+
+It will generate the auth.guard.ts file in this folder.
+
+We will inject the router using the constructor.
+
+```typescript
+constructor(private router: Router) { }
+```
+
+Now we will use the **canActivate** method to implement the required functionality.
+
+```typescript
+canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    
+    // check whether the localStorage has data for loggedInUser 
+    if (localStorage.getItem('loggedInUser') != null) {
+      return true;
+    }
+    else {
+      // navigate to login page
+      return this.router.navigate(['/login']);
+    }
+  }
+```
+
+### Step 5 : Implement the Auth Guard
+
+To implement the guard in the application. Add another property to each route in the routes array in app-routing.module.ts file. 
+
+```typescript
+const routes: Routes = [
+  { path: '', component: DashboardComponent, canActivate: [AuthGuard] },
+  { path: 'create-account', component: CreateAccountComponent, canActivate: [AuthGuard] },
+  { path: 'manage-accounts', component: ManageAccountsComponent, canActivate: [AuthGuard] },
+  { path: 'deposit-funds', component: DepositFundsComponent, canActivate: [AuthGuard] },
+  { path: 'transfer-funds', component: TransferFundsComponent, canActivate: [AuthGuard] },
+  { path: 'login', component: LoginComponent },
+  { path: '**', component: PageNotFoundComponent },
+];
+```
+
+This property will check the logic we have implemented in **AuthGuard** before navigating to the respective route or path.
+
+### Step 6 : Controlling SideBar Behaviour
+
+Create a variable to save the user role.
+
+```typescript
+loggedInUserRole: string;
+```
+
+Inject the AuthService in the constructor.
+
+```typescript
+constructor(private authService: AuthService) { }
+```
+
+Using OnInit life cycle hook we will initialize the variable **loggedInUserRole**
+
+```typescript
+ngOnInit(): void {
+    this.loggedInUserRole = JSON.parse(localStorage.getItem('loggedInUser')).roles[0];
+  }
+```
+
+Now in order to control on view / html page which controls to be shown based on the user role. We will be using angular structural directive.
+
+Structural Directives are directives which change the structure of the DOM by adding or removing elements. There are three built-in structural directives, NgIf , NgFor and NgSwitch.
+
+```html
+*ngIf="this.loggedInUserRole == 'account-holder'"
+```
 
