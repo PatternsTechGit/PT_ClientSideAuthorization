@@ -267,4 +267,46 @@ When we run the application. Since the user is having role of **account-holder**
 - Create New Account
 - Manage Accounts
 
+### Step 7 : Controlling ToolBar Behaviour
 
+In Toolbar component we will implement the authorization behaviour using AuthService. So inject the auth service in the controller and create a variable for logged in user
+
+```typescript
+loggedInUser?: AppUser;
+constructor(private authService: AuthService) { }
+```
+
+Initialize the data in the logged in user using OnInit life cycle hook.
+
+```typescript
+ngOnInit(): void {
+    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+}
+```
+
+Also create a method to logout the user when clicking on the logout link
+
+```typescript
+logout(): void {
+    this.authService.logout();
+}
+```
+
+There to implement the functionality in the component view 
+
+```
+<ul class="navbar-nav ml-auto">
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="photo">
+                <img alt="Profile Photo" src="assets/images/anime3.png" />
+            </div>
+            {{loggedInUser.firstName + ' ' + loggedInUser.lastName}}
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+        <a class="dropdown-item">Profile</a>
+        <a class="dropdown-item" (click)="logout()" >Logout</a>
+        </div>
+    </li>
+</ul>
+```
