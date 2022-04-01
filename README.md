@@ -318,3 +318,7 @@ There to implement the functionality in the component view
 
 When we run the application and click on login button following response will be received as the user has role of account holder.
 ![image](https://user-images.githubusercontent.com/100778209/161303657-960e11c1-9aaa-44cd-a748-4f2c00d4b977.png)
+
+To logout the application click on Logout link by using context menu under user avatar.
+![image](https://user-images.githubusercontent.com/100778209/161303841-2f81f823-2544-4237-b184-4c38b25e672c.png)
+
