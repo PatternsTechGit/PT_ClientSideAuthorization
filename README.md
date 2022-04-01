@@ -104,7 +104,7 @@ Inject the AuthService and Router in constructor
 constructor(private authService: AuthService, private router: Router) { }
 ```
 
-Create a button to simulate the login functionality
+Create a button to simulate the login functionality. When user clicks on this button it will perform the functionality by calling the auth service in login method. 
 
 ```typescript
 <button class="btn btn-primary"  type="button" (click)="login()">Login</button>
