@@ -131,6 +131,11 @@ login() {
       });
   }
 ```
+
+When we run the project 
+![image](https://user-images.githubusercontent.com/100778209/161303446-e788de20-65b8-43f3-b50f-93d9a640565a.png)
+
+
 ### Step 4 : Create the Auth Guard
 
 In order to authorize the user to access the application after login to the application. We will be using angular canActivate [Route Guard](https://angular.io/api/router/CanActivate).
@@ -310,3 +315,6 @@ There to implement the functionality in the component view
     </li>
 </ul>
 ```
+
+When we run the application and click on login button following response will be received as the user has role of account holder.
+![image](https://user-images.githubusercontent.com/100778209/161303657-960e11c1-9aaa-44cd-a748-4f2c00d4b977.png)
