@@ -98,9 +98,42 @@ To navigate the user for credentials information create a login component.
 ng generate component Login
 ```
 
+Inject the AuthService and Router in constructor
+
+```typescript
+constructor(private authService: AuthService, private router: Router) { }
+```
+
+Create a button to simulate the login functionality
+
+```typescript
+<button class="btn btn-primary"  type="button" (click)="login()">Login</button>
+```
+
+Create the login() method in the login.component.ts file
+
+```typescript
+login() {
+
+    // calling the login() method in the auth service
+    this.authService.login()
+      .subscribe(user => {
+        console.log("Is Login Success: " + user);
+
+        // check whether the user object has the data
+        if (user) {
+          // navigate to application home page
+          this.router.navigate(['/'])
+          .then(() => {
+            window.location.reload();
+          });
+        }
+      });
+  }
+```
 ### Step 4 : Create the Auth Guard
 
-In order to authorize the user to access the application after login to the application. We will be using angular **Guard**.
+In order to authorize the user to access the application after login to the application. We will be using angular canActivate [Route Guard](https://angular.io/api/router/CanActivate).
 
 Guards in Angular are nothing but the functionality, logic, and code which are executed before the route is loaded or the ones leaving the route. There are different type of guards.
 
@@ -196,6 +229,42 @@ Now in order to control on view / html page which controls to be shown based on 
 
 Structural Directives are directives which change the structure of the DOM by adding or removing elements. There are three built-in structural directives, NgIf , NgFor and NgSwitch.
 
-```html
-*ngIf="this.loggedInUserRole == 'account-holder'"
+SideNav links were created using the anchor html tag as follows
+
 ```
+<div>
+    <li><a [routerLink]="['/transfer-funds', { fromAccountId: '111', toAccountId: '222' }]"><i
+                class="fas fa-random"></i> Transfer Funds</a></li>
+    <li><a [routerLink]="['/deposit-funds']"><i
+                class="fas fa-money-check-alt"></i>Deposit Funds</a></li>
+    <li><a [routerLink]="['/create-account']"><i
+                class="fas fa-user"></i> Create New Account</a></li>
+    <li><a [routerLink]="['/manage-accounts']"><i
+                class="fas fa-users"></i> Manage Accounts</a></li>
+</div>
+```
+
+To control the behavior of sidenav we are using the **NgIf** structural directive
+
+```
+<div>
+    <li *ngIf="this.loggedInUserRole == 'account-holder'"><a
+            [routerLink]="['/transfer-funds', { fromAccountId: '111', toAccountId: '222' }]"><i
+                class="fas fa-random"></i> Transfer Funds</a></li>
+    <li *ngIf="this.loggedInUserRole == 'account-holder'"><a [routerLink]="['/deposit-funds']"><i
+                class="fas fa-money-check-alt"></i>Deposit Funds</a></li>
+    <li *ngIf="this.loggedInUserRole == 'bank-manager'"><a [routerLink]="['/create-account']"><i
+                class="fas fa-user"></i> Create New Account</a></li>
+    <li *ngIf="this.loggedInUserRole == 'bank-manager'"><a [routerLink]="['/manage-accounts']"><i
+                class="fas fa-users"></i> Manage Accounts</a></li>
+</div>
+```
+
+The *ngIf="this.loggedInUserRole == 'account-holder'" is checking for role of account holder. 
+The *ngIf="this.loggedInUserRole == 'bank-manager'" is checking for role of the bank manager.
+
+When we run the application. Since the user is having role of **account-holder** so, cann't be able to view links for;
+- Create New Account
+- Manage Accounts
+
+
