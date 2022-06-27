@@ -6,7 +6,7 @@ Authentication verifies who the user is, whereas Authorization determines what r
 
 ## About this exercise
 
-Previously we have developed an Angular application that have components like DashboardComponent, CreateAccountComponent, ManageAccountsComponent, DepositFundsComponent and TransferFundsComponent.
+Previously we have developed an Angular application that have components like `DashboardComponent`, `CreateAccountComponent`, `ManageAccountsComponent`, `DepositFundsComponent` and `TransferFundsComponent`.
 We also have routes configured for these components and a Side Nav that has links for these routes. A Toolbar that controls the Side Nav.
 
 In this exercise we will

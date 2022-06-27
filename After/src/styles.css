@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+html, body { height: 100%; }
+body {
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #525f7f;
+  text-align: left;
+  background-color: #1e1e2f;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.mat-drawer-content {
+  overflow: hidden !important;
+}
+.mat-drawer-container {
+  background-color: #1e1e2f;
+
+}
+.mat-drawer {
+  background-color: #1e1e2f;
+
+}
+
+a.sidenav-button {
+  display: inline;
+  color: rgba(255, 255, 255, .5);
+  margin-right: 10px;
+  transition: all .3s ease 0s;
+}
+a.sidenav-button:hover {
+  color: rgba(255, 255, 255, .8);
+  transition: all .3s ease 0s;
+}
+/* Used to style profile photo in navbar */
+.navbar .photo {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%;
+  vertical-align: middle;
+  overflow: hidden;
+}
+
+.navbar .photo img {
+  width: 100%;
+}
+
+/* Class to align photo icon left in navbar */
+.ml-nav-custom {
+  margin-left: auto !important;
+}
