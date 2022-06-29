@@ -1,8 +1,8 @@
 <div class="container-fluid" style="height: 100%;">
-<app-toolbar [inputSideNav]="sidenav"></app-toolbar> 
+<app-toolbar  *ngIf="isUserLoggedIn" [inputSideNav]="sidenav"></app-toolbar> 
       <mat-sidenav-container  style="height: 100%;">
           <mat-sidenav opened #sidenav mode="side">
-        <app-sidenav></app-sidenav>
+        <app-sidenav  *ngIf="isUserLoggedIn"></app-sidenav>
           </mat-sidenav>
           <mat-sidenav-content>
             <router-outlet></router-outlet> 

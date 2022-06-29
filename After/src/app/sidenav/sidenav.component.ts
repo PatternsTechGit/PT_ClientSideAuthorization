@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-sidenav',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./sidenav.component.css']
 })
 export class SidenavComponent implements OnInit {
+  loggedInUserRole?: string;
+  constructor(private authService: AuthService) { }
 
-  constructor() { }
 
   ngOnInit(): void {
+       this.loggedInUserRole = JSON.parse(localStorage.getItem('loggedInUser')|| '{}').roles[0];
   }
 
 }

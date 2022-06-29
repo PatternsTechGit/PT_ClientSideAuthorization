@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SidenavComponent } from './sidenav/sidenav.component';
     DepositFundsComponent,
     TransferFundsComponent,
     ToolbarComponent,
-    SidenavComponent
+    SidenavComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

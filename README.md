@@ -2,23 +2,26 @@
 
 ## Authentication vs Authorization
 
-Authentication verifies who the user is, whereas Authorization determines what resources a user can access. Authentication is the act of validating that users are whom they claim to be. This is the first step in any security process. Authorization in system security is the process of giving the user permission to access a specific resource or function.
+Authentication verifies who the user is, whereas Authorization determines what resources a user can access. Authentication is the act of validating that users are whom they claim to be. This is the first step in any security process. Authorization in system security is the process of giving the user permission/rights to access a specific resource.
 
-## About this exercise
+# About this exercise
 
-Previously we have developed an Angular application that have components like `DashboardComponent`, `CreateAccountComponent`, `ManageAccountsComponent`, `DepositFundsComponent` and `TransferFundsComponent`.
+## Previously:
+
+ we have developed an Angular application that have components like `DashboardComponent`, `CreateAccountComponent`, `ManageAccountsComponent`, `DepositFundsComponent` and `TransferFundsComponent`.
 We also have routes configured for these components and a Side Nav that has links for these routes. A Toolbar that controls the Side Nav.
 
 In this exercise we will
 
-- Create AuthService to simulate a User Login and Logout.
-- Restrict access to routes unless there is a logged in User.
-- Show & Hide Side Nav links based on the logged in User's role.
+- Create **AuthService** to simulate a User Login and Logout.
+- Create **AuthGuard** to restrict access to routes unless there is a logged in User.
+- Show & Hide Side Nav links based on the logged-in User's role.
 - Show the name of logged in User in Toolbar.
 
 ### Step 1 : AppUser model
 
-Create a model that will represent the logged in User. Create a folder "models" and add AppUser.ts file.
+First we will create a new model that will represent the logged in User. Create a folder `models` under `app` directory and add `AppUser.ts` file in it.
+This model will contains user related properties as below :
 
 ```typescript
 export class AppUser {
@@ -33,13 +36,13 @@ export class AppUser {
 
 ### Step 2 : Create the Auth Service
 
-Create a service **AuthService** to implement the authentication flow in services folder.
+We will create a service `AuthService` which will implement the authentication flow like **login** & **logout** behavior, We will create a new `services` folder under `app` directory and then will generate the service using command as below : 
 
 ```
 ng generate service Auth
 ```
 
-Inject the angular router in the constructor
+Inject the angular router in the constructor.
 
 ```typescript
 constructor(private router: Router) { }
@@ -51,7 +54,7 @@ Create the variable to store the logged in user information
 loggedInUser?: AppUser;
 ```
 
-Create the login method which returns the AppUser observable
+Create the `login` method which will returns the AppUser observable with hard-coded values and will store the user JSON in local storage as below :
 
 ```typescript
 login(): Observable<AppUser> {
@@ -75,7 +78,7 @@ login(): Observable<AppUser> {
   }
 ```
 
-Create the logout method to remove the user information from localStorage which we will be using for checking whether the user session is valid or not.
+Create the `logout` method to remove the user information from localStorage which we will be using for checking whether the user session is valid or not.
 
 ```typescript
 logout(): void {
@@ -92,7 +95,7 @@ logout(): void {
 
 ### Step 3 : Create the Login Component
 
-To navigate the user for credentials information create a login component.
+We will create new component to navigate the user for credentials information e.g. login button, we will generate a new component using command as below:
 
 ```
 ng generate component Login
@@ -110,7 +113,7 @@ Create a button to simulate the login functionality. When user clicks on this bu
 <button class="btn btn-primary"  type="button" (click)="login()">Login</button>
 ```
 
-Create the login() method in the login.component.ts file
+Create the `login` method in the `login.component.ts` file
 
 ```typescript
 login() {
@@ -132,7 +135,7 @@ login() {
   }
 ```
 
-When we run the project 
+Run the project it will looks like below : 
 ![image](https://user-images.githubusercontent.com/100778209/161303446-e788de20-65b8-43f3-b50f-93d9a640565a.png)
 
 
@@ -142,7 +145,7 @@ In order to authorize the user to access the application after login to the appl
 
 Guards in Angular are nothing but the functionality, logic, and code which are executed before the route is loaded or the ones leaving the route. There are different type of guards.
 
-Create the gurad **AuthGuard** using the command in guards folder.
+Create the guard **AuthGuard** using the command in guards folder.
 
 ```
 ng generate guard Auth
@@ -174,9 +177,12 @@ canActivate(
   }
 ```
 
-### Step 5 : Implement the Auth Guard
+### Step 5 : Implement the Auth Guard Routes
 
-To implement the guard in the application. Add another property to each route in the routes array in app-routing.module.ts file.
+
+To implement the guard in the application. Add another property `AuthGuard` to each route in the routes array in `app-routing.module.ts` file.
+
+The `AuthGuard` property will check the logic we have implemented in **AuthGuard** before navigating to the respective route.
 
 ```typescript
 const routes: Routes = [
@@ -206,35 +212,33 @@ const routes: Routes = [
 ];
 ```
 
-This property will check the logic we have implemented in **AuthGuard** before navigating to the respective route or path.
+### Step 6 : Controlling SideBar Behavior
 
-### Step 6 : Controlling SideBar Behaviour
+Go to `sidenav.component.ts` and create a variable `loggedInUserRole` which will get the logged-in user role from local storage.
 
-Create a variable to save the user role.
-
-```typescript
+```ts
 loggedInUserRole: string;
 ```
 
 Inject the AuthService in the constructor.
 
-```typescript
+```ts
 constructor(private authService: AuthService) { }
 ```
 
 Using OnInit life cycle hook we will initialize the variable **loggedInUserRole**
 
-```typescript
+```ts
 ngOnInit(): void {
-    this.loggedInUserRole = JSON.parse(localStorage.getItem('loggedInUser')).roles[0];
+  this.loggedInUserRole = JSON.parse(localStorage.getItem('loggedInUser')|| '{}').roles[0];
   }
 ```
 
-Now in order to control on view / html page which controls to be shown based on the user role. We will be using angular structural directive.
+Now in order to control on html page which controls to be shown based on the user role. We will be using angular structural directive.
 
-Structural Directives are directives which change the structure of the DOM by adding or removing elements. There are three built-in structural directives, NgIf , NgFor and NgSwitch.
+**Structural Directives** are directives which change the structure of the DOM by adding or removing elements. There are three built-in structural directives, NgIf , NgFor and NgSwitch.
 
-SideNav links were created using the anchor html tag as follows
+SideNav links are already created using the anchor html tag as follows
 
 ```
 <div>
@@ -249,7 +253,7 @@ SideNav links were created using the anchor html tag as follows
 </div>
 ```
 
-To control the behavior of sidenav we are using the **NgIf** structural directive
+To control the behavior of `sidenav` we are using the **NgIf** structural directive
 
 ```
 <div>
@@ -268,13 +272,13 @@ To control the behavior of sidenav we are using the **NgIf** structural directiv
 The *ngIf="this.loggedInUserRole == 'account-holder'" is checking for role of account holder. 
 The *ngIf="this.loggedInUserRole == 'bank-manager'" is checking for role of the bank manager.
 
-When we run the application. Since the user is having role of **account-holder** so, cann't be able to view links for;
+When we run the application. Since the user is having role of **account-holder** so, can't be able to view links for;
 - Create New Account
 - Manage Accounts
 
-### Step 7 : Controlling ToolBar Behaviour
+### Step 7 : Controlling ToolBar Behavior
 
-In Toolbar component we will implement the authorization behaviour using AuthService. So inject the auth service in the controller and create a variable for logged in user
+In `toolbar.component.ts` component we will implement the authorization behavior using AuthService. So we will inject the `AuthService` in the controller and create a variable for logged in user.
 
 ```typescript
 loggedInUser?: AppUser;
@@ -285,7 +289,7 @@ Initialize the data in the logged in user using OnInit life cycle hook.
 
 ```typescript
 ngOnInit(): void {
-    this.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
+     this.loggedInUser = JSON.parse(localStorage.getItem('loggedInUser')|| '{}');
 }
 ```
 
@@ -297,7 +301,7 @@ logout(): void {
 }
 ```
 
-There to implement the functionality in the component view 
+Go to `toolbar.component.ts` and use the `loggedInUser` to show the first and last name of logged-in user as below :
 
 ```
 <ul class="navbar-nav ml-auto">
@@ -316,7 +320,30 @@ There to implement the functionality in the component view
 </ul>
 ```
 
-When we run the application and click on login button following response will be received as the user has role of account holder.
+### Step *7* : Controlling AppComponent Behavior
+
+Go `app.component.html` component and **NgIf** condition on `app-toolbar` and `app-sidenav` to show it on the basis of loggedIn user only. 
+
+```html
+<app-toolbar  *ngIf="isUserLoggedIn" [inputSideNav]="sidenav"></app-toolbar> 
+ <app-sidenav  *ngIf="isUserLoggedIn"></app-sidenav>
+```
+
+Go to `app.component.ts` and inject the AuthService in the controller and create a `isUserLoggedIn` variable which will get the value from local storage.
+```typescript
+isUserLoggedIn?: boolean;
+ constructor(private authService: AuthService) {}
+```
+
+Initialize the data in the logged in user using OnInit life cycle hook.
+
+```typescript
+  ngOnInit(): void {
+    this.isUserLoggedIn =  localStorage.getItem('loggedInUser') != null;
+  }
+```
+
+Run the application and click on login button following response will be received as the user has role of account holder.
 ![image](https://user-images.githubusercontent.com/100778209/161303657-960e11c1-9aaa-44cd-a748-4f2c00d4b977.png)
 
 To logout the application click on Logout link by using context menu under user avatar.
