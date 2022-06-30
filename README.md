@@ -320,7 +320,7 @@ Go to `toolbar.component.ts` and use the `loggedInUser` to show the first and la
 </ul>
 ```
 
-### Step *8* : Controlling AppComponent Behavior
+### Step 8 : Controlling AppComponent Behavior
 
 Go `app.component.html` component and **NgIf** condition on `app-toolbar` and `app-sidenav` to show it on the basis of loggedIn user only. 
 
