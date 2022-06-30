@@ -42,7 +42,7 @@ We will create a service `AuthService` which will implement the authentication f
 ng generate service Auth
 ```
 
-Inject the angular router in the constructor.
+Inject the angular **router** in the constructor.
 
 ```typescript
 constructor(private router: Router) { }
@@ -54,7 +54,7 @@ Create the variable to store the logged in user information
 loggedInUser?: AppUser;
 ```
 
-Create the `login` method which will returns the AppUser observable with hard-coded values and will store the user JSON in local storage as below :
+Create the `login` method which will returns the `AppUser` observable with hard-coded values and will store the user JSON in local storage as below :
 
 ```typescript
 login(): Observable<AppUser> {
@@ -101,13 +101,13 @@ We will create new component to navigate the user for credentials information e.
 ng generate component Login
 ```
 
-Inject the AuthService and Router in constructor
+Inject the **AuthService** and **Router** in constructor.
 
 ```typescript
 constructor(private authService: AuthService, private router: Router) { }
 ```
 
-Create a button to simulate the login functionality. When user clicks on this button it will perform the functionality by calling the auth service in login method. 
+Create a button to simulate the login functionality. When user **clicks** on this button it will perform the functionality by calling the auth service in login method. 
 
 ```typescript
 <button class="btn btn-primary"  type="button" (click)="login()">Login</button>
@@ -143,7 +143,7 @@ Run the project it will looks like below :
 
 In order to authorize the user to access the application after login to the application. We will be using angular canActivate [Route Guard](https://angular.io/api/router/CanActivate).
 
-Guards in Angular are nothing but the functionality, logic, and code which are executed before the route is loaded or the ones leaving the route. There are different type of guards.
+**Guards** in Angular are nothing but the functionality, logic, and code which are executed before the route is loaded or the ones leaving the route. There are different type of guards.
 
 Create the guard **AuthGuard** using the command in guards folder.
 
@@ -151,9 +151,9 @@ Create the guard **AuthGuard** using the command in guards folder.
 ng generate guard Auth
 ```
 
-It will generate the auth.guard.ts file in this folder.
+It will generate the `auth.guard.ts` file in this folder.
 
-We will inject the router using the constructor.
+We will inject the **router** using the constructor.
 
 ```typescript
 constructor(private router: Router) { }
@@ -182,7 +182,7 @@ canActivate(
 
 To implement the guard in the application. Add another property `AuthGuard` to each route in the routes array in `app-routing.module.ts` file.
 
-The `AuthGuard` property will check the logic we have implemented in **AuthGuard** before navigating to the respective route.
+The **AuthGuard** property will check the logic we have implemented in AuthGuard before navigating to the respective route.
 
 ```typescript
 const routes: Routes = [
@@ -220,13 +220,13 @@ Go to `sidenav.component.ts` and create a variable `loggedInUserRole` which will
 loggedInUserRole: string;
 ```
 
-Inject the AuthService in the constructor.
+Inject the **AuthService** in the constructor.
 
 ```ts
 constructor(private authService: AuthService) { }
 ```
 
-Using OnInit life cycle hook we will initialize the variable **loggedInUserRole**
+Using `OnInit` life cycle hook we will initialize the variable **loggedInUserRole**
 
 ```ts
 ngOnInit(): void {
@@ -285,7 +285,7 @@ loggedInUser?: AppUser;
 constructor(private authService: AuthService) { }
 ```
 
-Initialize the data in the logged in user using OnInit life cycle hook.
+Initialize the data in the logged in user using `OnInit` life cycle hook.
 
 ```typescript
 ngOnInit(): void {
@@ -293,7 +293,7 @@ ngOnInit(): void {
 }
 ```
 
-Also create a method to logout the user when clicking on the logout link
+Also create a method to **logout** the user when clicking on the logout link
 
 ```typescript
 logout(): void {
@@ -320,7 +320,7 @@ Go to `toolbar.component.ts` and use the `loggedInUser` to show the first and la
 </ul>
 ```
 
-### Step *7* : Controlling AppComponent Behavior
+### Step *8* : Controlling AppComponent Behavior
 
 Go `app.component.html` component and **NgIf** condition on `app-toolbar` and `app-sidenav` to show it on the basis of loggedIn user only. 
 
@@ -335,17 +335,19 @@ isUserLoggedIn?: boolean;
  constructor(private authService: AuthService) {}
 ```
 
-Initialize the data in the logged in user using OnInit life cycle hook.
+Initialize the data in the logged in user using `OnInit` life cycle hook.
 
 ```typescript
   ngOnInit(): void {
     this.isUserLoggedIn =  localStorage.getItem('loggedInUser') != null;
   }
 ```
+## Final output will look like this
 
-Run the application and click on login button following response will be received as the user has role of account holder.
+Click on **login** button following response will be received as the user has role of account holder.
 ![image](https://user-images.githubusercontent.com/100778209/161303657-960e11c1-9aaa-44cd-a748-4f2c00d4b977.png)
 
-To logout the application click on Logout link by using context menu under user avatar.
+To **logout** the application click on Logout link by using context menu under user avatar.
+
 ![image](https://user-images.githubusercontent.com/100778209/161303841-2f81f823-2544-4237-b184-4c38b25e672c.png)
 
