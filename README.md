@@ -236,7 +236,7 @@ ngOnInit(): void {
 
 Now in order to control on html page which controls to be shown based on the user role. We will be using angular structural directive.
 
-**Structural Directives** are directives which change the structure of the DOM by adding or removing elements. There are three built-in structural directives, NgIf , NgFor and NgSwitch.
+**Structural Directives** are directives which change the structure of the DOM by adding or removing elements. There are three built-in structural directives, `NgIf` , `NgFor` and `NgSwitch`.
 
 SideNav links are already created using the anchor html tag as follows
 
@@ -269,8 +269,8 @@ To control the behavior of `sidenav` we are using the **NgIf** structural direct
 </div>
 ```
 
-The *ngIf="this.loggedInUserRole == 'account-holder'" is checking for role of account holder. 
-The *ngIf="this.loggedInUserRole == 'bank-manager'" is checking for role of the bank manager.
+The ***ngIf="this.loggedInUserRole == 'account-holder'"** is checking for role of account holder. 
+The ***ngIf="this.loggedInUserRole == 'bank-manager'"** is checking for role of the bank manager.
 
 When we run the application. Since the user is having role of **account-holder** so, can't be able to view links for;
 - Create New Account
